@@ -1,0 +1,12 @@
+.customCard{
+    width:400px; 
+    border : 2px solid; 
+    margin-left: 10%;
+     display: inline-block;
+}
+
+.cardHeader{
+    border: 1px solid;
+     max-width: 93.6%;
+     margin-left: 3%;
+}
