@@ -10,3 +10,23 @@
      max-width: 93.6%;
      margin-left: 3%;
 }
+.pie {
+    width: 250px;
+    height: 250px;
+    background-image: conic-gradient(orange 64%, blue 17%, black);
+    border-radius: 50%
+  }
+
+  .circle {
+    margin-left: 7%;
+    width: 182px;
+    height: 185px;
+    border-radius: 50%;
+    font-size: 30px;
+    color: #fff;
+    line-height: 180px;
+    text-align: center;
+    background: #000;
+    display: inline-block;
+    margin-bottom: 1%;
+  }

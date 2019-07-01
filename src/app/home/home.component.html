@@ -3,17 +3,14 @@
     <div class="col-sm-12 cardHeader">
       <h4 class="card-title">Budget Overview</h4>
     </div>
-    <div class="col-sm-6">
-      <img class="card-img" src="https://material.angular.io/assets/img/examples/shiba1.jpg" alt="Card image" />
-    </div>
+    <div class="circle">{{ percentSpent }}% spent</div>
     <div class="col-sm-6">
       <div class="card-body-right">
-
         <p class="card-text">Total Budget</p>
         <label class="label">Rs {{ totalBudget }}</label>
 
         <p class="card-text">Total Expenses</p>
-        <label class="label">Rs 0</label>
+        <label class="label">{{ totalExpenses }}</label>
       </div>
     </div>
   </div>
@@ -24,15 +21,17 @@
     <div class="col-sm-12 cardHeader">
       <h4 class="card-title">Category wise split</h4>
     </div>
-    <div class="col-sm-6">
-      <img class="card-img" src="https://material.angular.io/assets/img/examples/shiba1.jpg" alt="Card image" />
-    </div>
-    <div class="col-sm-6">
-      <div class="card-body-right">
-
-        <p class="card-text">Needs to be updated for pie Chart</p>
-        <a href="#" class="btn btn-primary">See Profile</a>
-      </div>
+    <div class="col-sm-12">
+        <div class="container">
+            <div class="text-center">
+              <canvas baseChart
+                    [data]="pieChartData"
+                    [labels]="totalCategories"
+                    [chartType]="pieChartType"
+                    [options]="pieChartOptions">
+              </canvas>
+                </div>
+          </div>  
     </div>
   </div>
 </div>
@@ -41,7 +40,7 @@
     <button class="btn btn btn-info" data-toggle="modal" data-target="#myModal">Add Expenses</button>
 </div>
 
-<div class="expensesList" style="margin: 16px 54px;">
+<div class="expensesList" style="margin: 16px 24px;">
     <div class="list-group row">
        <div class="heading">
         <label class="list-item col-sm-2 offset-1" style="max-width: 20%;">Category</label>
@@ -51,10 +50,11 @@
        </div>
        <div class="listContent">
          <ul>
-           <li *ngFor="let detail of expensesArray" style="list-style: none;"><label class="list-item col-sm-2 offset-1" style="max-width: 20%;">{{detail.category}}</label>
+           <li *ngFor="let detail of expensesArray" style="list-style: none; margin-left: 3%;"><span id="categoryEdit"> &#x2710; </span><label class="list-item col-sm-2" style="max-width: 20%;">{{detail.category}}</label>
             <label class="list-item col-sm-2">{{detail.itemName}}</label>
-            <label class="list-item col-sm-2">{{detail.amount}}</label>
-            <label class="list-item col-sm-2">{{detail.date}} Date</label></li>
+            <label class="list-item col-sm-2">{{detail.amount  }}  </label>
+            <label class="list-item col-sm-2">{{detail.date  }}   </label>
+          </li>
          </ul>
        </div>
     </div>
@@ -107,7 +107,7 @@
         <input (focus)="focused();" type="number" pattern= "[0-9]" class="label col-sm-5" #expenseAmount  /><br/>
         <label for="itemAmount"  class="label col-sm-3" >Date</label>
         <input type="date" (focus)="focused();" class="label col-sm-5" #expenseDate />
-          <div *ngIf="errors" style="color:red"><b><p>{{ errors }}</p></b></div>
+          <div *ngIf="errors" style="color:red"><b><p>{{ errors }}  </p></b></div>
       </div>
       
       <!-- Modal footer -->
@@ -119,4 +119,3 @@
     </div>
   </div>
 </div>
-

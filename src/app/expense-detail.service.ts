@@ -30,9 +30,7 @@ export class ExpenseDetailService {
       localStorage.setItem('expenseDetails', JSON.stringify(this.expenseDetailsArray));
     }
   }
-  getExpenseDetails() {
-    return this.expenseDetailsArray;
-  }
+
 
   updateBudget(amount) {
     if (amount < 0) {
@@ -40,6 +38,17 @@ export class ExpenseDetailService {
       localStorage.setItem('projectBudget', amount);
     } else {
       localStorage.setItem('projectBudget', amount);
+    }
+  }
+  updateExpense(amount) {
+    if (amount < 0) {
+      amount = 0;
+      localStorage.setItem('projectExpense', amount);
+    } else {
+      let pExpense = localStorage.getItem('projectExpense');
+
+      amount += Number.parseInt(pExpense);
+      localStorage.setItem('projectExpense', amount);
     }
   }
 
@@ -51,7 +60,9 @@ export class ExpenseDetailService {
       console.log(localStorage.setItem('categories', JSON.stringify(this.categoriesArr)));
     }
   }
-
+  getExpenseDetails() {
+    return this.expenseDetailsArray;
+  }
   get totalBudget() {
     let amount = localStorage.getItem('projectBudget');
     if (!amount) {
@@ -60,7 +71,14 @@ export class ExpenseDetailService {
       return amount;
     }
   }
-
+  get totalExpenses() {
+    let pExpense = localStorage.getItem('projectExpense');
+    if (!pExpense) {
+      return 0;
+    } else {
+      return pExpense;
+    }
+  }
   getcategories() {
     return this.categoriesArr;
   }
