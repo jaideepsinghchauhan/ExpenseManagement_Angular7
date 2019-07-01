@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ExpenseDetailService } from '../expense-detail.service';
 import { Expense } from '../shared/expense';
 import { formatDate } from '@angular/common';
-declare var jquery:any;
-declare var $ :any;
+declare var $: any;
 
 @Component({
   selector: 'app-home',
@@ -11,29 +10,31 @@ declare var $ :any;
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  totalBudget: string;
+  totalBudget: number;
   totalCategories = [];
   Expenses: Expense;
   expensesArray: Expense[];
   errors: string = "";
   totalExpenses: number;
   percentSpent: number;
+
   constructor(private expenseDetails: ExpenseDetailService) { }
 
-
-
-  //public pieChartLabels: string[] = ["Pending", "InProgress", "OnHold", "Complete", "Cancelled"];
   public pieChartData: number[] = [];
   public pieChartType: string = 'pie';
   public pieChartOptions: any = {};
 
   ngOnInit() {
-    this.totalBudget = this.expenseDetails.totalBudget as string;
+    this.totalBudget = this.expenseDetails.totalBudget;
     this.totalExpenses = +this.expenseDetails.totalExpenses;
     this.totalCategories = this.expenseDetails.getcategories();
     this.expensesArray = this.expenseDetails.getExpenseDetails();
     this.percentSpent = Math.round(((this.totalExpenses / (+this.totalBudget)) * 100));
+    if (Number.isNaN(this.percentSpent)) {
+      this.percentSpent = 0;
+    }
     this.calculateData();
+
   }
 
   calculateData() {
@@ -70,15 +71,13 @@ export class HomeComponent implements OnInit {
       return;
     }
 
-    if(!this.errors){
-      $('#myModal').modal('hide');
-    }
 
-    if ((this.totalExpenses + (+amount.value)) < +this.totalBudget) {
+
+    if ((this.totalExpenses + (Number.parseInt(amount.value))) < this.totalBudget) {
       let ex = new Expense(category.value, itemName.value, +amount.value, formatDate(date.value, format, locale));
       console.log("expenses");
       console.log(ex);
-      this.expenseDetails.updateExpense(amount.value);
+      this.expenseDetails.updateExpense(Number.parseInt(amount.value));
       this.expenseDetails.addExpenseDetails(ex);
     } else {
       this.errors += "Total Expenses cannot be more then budget";
@@ -86,6 +85,12 @@ export class HomeComponent implements OnInit {
     console.log("expenses added" + category.value + " " +
       itemName.value + " " + amount.value + " " + date.value);
 
+    if (!this.errors) {
+      $('#myModal').modal('hide');
+      amount.value="";
+      itemName.value="";
+      date.value="";
+    }
 
   }
 
@@ -93,4 +98,8 @@ export class HomeComponent implements OnInit {
     this.errors = "";
   }
 
+  deleteExpenseDetails(index){
+    console.log(index);
+    this.expenseDetails.deleteDetails(index);
+  }
 }

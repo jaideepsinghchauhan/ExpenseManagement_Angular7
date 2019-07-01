@@ -10,12 +10,6 @@
      max-width: 93.6%;
      margin-left: 3%;
 }
-.pie {
-    width: 250px;
-    height: 250px;
-    background-image: conic-gradient(orange 64%, blue 17%, black);
-    border-radius: 50%
-  }
 
   .circle {
     margin-left: 7%;
@@ -29,4 +23,12 @@
     background: #000;
     display: inline-block;
     margin-bottom: 1%;
+  }
+  div.listContent{
+    height : 200px;
+    overflow-y: scroll;
+  }
+  
+  #categoryEdit{
+    cursor: pointer;
   }

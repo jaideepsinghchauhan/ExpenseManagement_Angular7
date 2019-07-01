@@ -21,8 +21,6 @@ export class ExpenseDetailService {
   }
 
   addExpenseDetails(expense: Expense) {
-    console.log("inside service expense");
-    console.log(expense);
     if (!expense) {
       return;
     } else {
@@ -41,14 +39,13 @@ export class ExpenseDetailService {
     }
   }
   updateExpense(amount) {
-    if (amount < 0) {
+    if (Number.isNaN(amount)) {
       amount = 0;
       localStorage.setItem('projectExpense', amount);
     } else {
-      let pExpense = localStorage.getItem('projectExpense');
-
-      amount += Number.parseInt(pExpense);
-      localStorage.setItem('projectExpense', amount);
+      let pExpense = JSON.parse(localStorage.getItem('projectExpense'));
+      pExpense += amount;
+      localStorage.setItem('projectExpense', JSON.stringify(pExpense));
     }
   }
 
@@ -57,14 +54,14 @@ export class ExpenseDetailService {
       return;
     } else {
       this.categoriesArr.push(name);
-      console.log(localStorage.setItem('categories', JSON.stringify(this.categoriesArr)));
+      localStorage.setItem('categories', JSON.stringify(this.categoriesArr));
     }
   }
   getExpenseDetails() {
     return this.expenseDetailsArray;
   }
   get totalBudget() {
-    let amount = localStorage.getItem('projectBudget');
+    let amount = Number.parseInt(localStorage.getItem('projectBudget'));
     if (!amount) {
       return 0;
     } else {
@@ -72,7 +69,7 @@ export class ExpenseDetailService {
     }
   }
   get totalExpenses() {
-    let pExpense = localStorage.getItem('projectExpense');
+    let pExpense = Number.parseInt(localStorage.getItem('projectExpense'));
     if (!pExpense) {
       return 0;
     } else {
@@ -81,5 +78,17 @@ export class ExpenseDetailService {
   }
   getcategories() {
     return this.categoriesArr;
+  }
+
+  deleteDetails(index) {
+    let temp = Number.parseInt(this.expenseDetailsArray[index].amount);
+    this.updateExpense(-temp);
+    const val = this.expenseDetailsArray.splice(index, 1);
+    localStorage.setItem('expenseDetails', JSON.stringify(this.expenseDetailsArray));
+  }
+  deleteCategories(index){
+    console.log("index"+index);
+    this.categoriesArr.splice(index,1);
+    localStorage.setItem('categories', JSON.stringify(this.categoriesArr));
   }
 }

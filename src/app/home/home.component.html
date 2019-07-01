@@ -50,7 +50,11 @@
        </div>
        <div class="listContent">
          <ul>
-           <li *ngFor="let detail of expensesArray" style="list-style: none; margin-left: 3%;"><span id="categoryEdit"> &#x2710; </span><label class="list-item col-sm-2" style="max-width: 20%;">{{detail.category}}</label>
+           <li *ngFor="let detail of expensesArray; 
+             let i = index" 
+             style="list-style: none; margin-left: 3%;">
+            <span id="categoryEdit" (click)="deleteExpenseDetails(i);"> &#x2710; </span>
+            <label class="list-item col-sm-2" style="max-width: 20%;">{{detail.category}}</label>
             <label class="list-item col-sm-2">{{detail.itemName}}</label>
             <label class="list-item col-sm-2">{{detail.amount  }}  </label>
             <label class="list-item col-sm-2">{{detail.date  }}   </label>
@@ -60,6 +64,7 @@
     </div>
 </div>
 
+   <!-- didnot use pagination in the current functionality -->
 <nav aria-label="..." style="margin-left : 20px;">
     <ul class="pagination">
       <li class="page-item disabled">

@@ -7,7 +7,7 @@ import { ExpenseDetailService } from 'src/app/expense-detail.service';
   styleUrls: ['./lazy-settings.component.css']
 })
 export class LazySettingsComponent implements OnInit {
-  inputBudget: string;
+  inputBudget: number;
   inputCategory: string;
   categoryArray  = [];
   constructor( private expenseDetails: ExpenseDetailService) { 
@@ -16,7 +16,7 @@ export class LazySettingsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.inputBudget = this.expenseDetails.totalBudget as string;
+    this.inputBudget = this.expenseDetails.totalBudget;
   }
 
   AddBudget() {
@@ -29,4 +29,7 @@ export class LazySettingsComponent implements OnInit {
     console.log("added category"+ this.inputCategory);
   }
 
+  deletecategories(index){
+    this.expenseDetails.deleteCategories(index);
+  }
 }

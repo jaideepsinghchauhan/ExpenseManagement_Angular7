@@ -23,7 +23,8 @@
       <div class="cardList col-sm-6">
         <ul>
           <h3>List Names here:</h3>
-          <li *ngFor="let item of categoryArray" style="list-style: none;">{{ item }}<span id="categoryEdit"> &#x2710; </span></li>
+          <li *ngFor="let item of categoryArray; let i = index" style="list-style: none;">{{ item }}
+            <span id="categoryEdit" (click)="deletecategories(i);" style="cursor: pointer"> &#x2710; </span></li>
         </ul>
       </div>
   </div>
