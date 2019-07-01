@@ -1,0 +1,9 @@
+.cardList{
+    border: 1px solid;
+    margin-top: 5%; 
+    margin-left:5%;
+}
+#categoryEdit{
+    float : right;
+    font-family: 'Zapf Dingbats';
+}

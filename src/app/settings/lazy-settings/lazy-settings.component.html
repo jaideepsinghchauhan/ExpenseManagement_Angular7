@@ -5,8 +5,9 @@
      name="inputBudget" 
      id="inputBudget" 
      class="col-sm-3" 
+     [(ngModel)]="inputBudget"
      placeholder="Enter Budget amount"/>
-    <button class="btn btn-success col-sm-3 offset-1">Update</button>
+    <button class="btn btn-success col-sm-3 offset-1" (click)="AddBudget();">Update</button>
   </div>
   <div class="categories" style="margin-top: 5%;">
     <label for="inputBudget" class="col-sm-3 offset-1">Categories</label>
@@ -14,14 +15,15 @@
      name="inputBudget"
       id="inputBudget"
        class="col-sm-3"
+       [(ngModel)]="inputCategory"
         placeholder="Enter category name here"/>
-    <button class="btn btn-success col-sm-3 offset-1">Add</button>
+    <button class="btn btn-success col-sm-3 offset-1" (click)="addCategories();">Add</button>
   </div>
   <div class="categoryItem list-item">
-      <div class="card col-sm-6" style="border: 1px solid;margin-top: 5%; margin-left:5%;">
+      <div class="cardList col-sm-6">
         <ul>
           <h3>List Names here:</h3>
-          <li>1</li>
+          <li *ngFor="let item of categoryArray" style="list-style: none;">{{ item }}<span id="categoryEdit"> &#x2710; </span></li>
         </ul>
       </div>
   </div>

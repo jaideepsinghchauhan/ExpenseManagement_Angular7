@@ -10,7 +10,7 @@
       <div class="card-body-right">
 
         <p class="card-text">Total Budget</p>
-        <label class="label">Rs 0</label>
+        <label class="label">Rs {{ totalBudget }}</label>
 
         <p class="card-text">Total Expenses</p>
         <label class="label">Rs 0</label>
@@ -38,19 +38,24 @@
 </div>
 
 <div class="addExpense" style="margin: 55px 45px;">
-    <button class="btn btn btn-info">Add Expenses</button>
+    <button class="btn btn btn-info" data-toggle="modal" data-target="#myModal">Add Expenses</button>
 </div>
 
 <div class="expensesList" style="margin: 16px 54px;">
     <div class="list-group row">
        <div class="heading">
-        <label class="list-item col-sm-3" style="max-width: 20%;">Category</label>
-        <label class="list-item col-sm-3">item name</label>
-        <label class="list-item col-sm-3">Amount</label>
-        <label class="list-item col-sm-3">Expense date</label>
+        <label class="list-item col-sm-2 offset-1" style="max-width: 20%;">Category</label>
+        <label class="list-item col-sm-2">Item Name</label>
+        <label class="list-item col-sm-2">Amount</label>
+        <label class="list-item col-sm-2">Expense Date</label>
        </div>
        <div class="listContent">
-         Dynamic list content will generate here.
+         <ul>
+           <li *ngFor="let detail of expensesArray" style="list-style: none;"><label class="list-item col-sm-2 offset-1" style="max-width: 20%;">{{detail.category}}</label>
+            <label class="list-item col-sm-2">{{detail.itemName}}</label>
+            <label class="list-item col-sm-2">{{detail.amount}}</label>
+            <label class="list-item col-sm-2">{{detail.date}} Date</label></li>
+         </ul>
        </div>
     </div>
 </div>
@@ -75,3 +80,43 @@
       </li>
     </ul>
   </nav>
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Modal Heading</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      
+      <!-- Modal body -->
+      <div class="modal-body" (focus)="focused();">
+        <label for="itemName" class="label col-sm-3">Category</label>
+        <select #expenseCategory class="label col-sm-3">
+          <option *ngFor="let item of totalCategories; let i = index" [value]="item">
+            {{item}}
+          </option>
+        </select>
+        <br/>
+        <label for="itemName" class="label col-sm-3">Item Name</label>
+        <input (focus)="focused();" type="text" class="label col-sm-5" #expenseName /><br/>
+        <label for="itemAmount" class="label col-sm-3">Amount</label>
+        <input (focus)="focused();" type="number" pattern= "[0-9]" class="label col-sm-5" #expenseAmount  /><br/>
+        <label for="itemAmount"  class="label col-sm-3" >Date</label>
+        <input type="date" (focus)="focused();" class="label col-sm-5" #expenseDate />
+          <div *ngIf="errors" style="color:red"><b><p>{{ errors }}</p></b></div>
+      </div>
+      
+      <!-- Modal footer -->
+      <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="addExpenses(expenseCategory, expenseName,expenseAmount,expenseDate);">OK</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
