@@ -24,7 +24,9 @@
     "core-js": "^2.5.4",
     "jquery": "^3.4.1",
     "ng2-charts": "^2.2.3",
+    "ngx-pagination": "^4.0.0",
     "rxjs": "~6.3.3",
+    "rxjs-compat": "^6.5.2",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
   },

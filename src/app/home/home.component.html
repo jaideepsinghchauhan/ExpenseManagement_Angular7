@@ -22,81 +22,32 @@
       <h4 class="card-title">Category wise split</h4>
     </div>
     <div class="col-sm-12">
-        <div class="container">
-            <div class="text-center">
-              <canvas baseChart
-                    [data]="pieChartData"
-                    [labels]="totalCategories"
-                    [chartType]="pieChartType"
-                    [options]="pieChartOptions">
-              </canvas>
-                </div>
-          </div>  
+      <div class="container">
+        <div class="text-center">
+          <canvas baseChart [data]="pieChartData" [labels]="totalCategories" [chartType]="pieChartType"
+            [options]="pieChartOptions">
+          </canvas>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="addExpense" style="margin: 55px 45px;">
-    <button class="btn btn btn-info" data-toggle="modal" data-target="#myModal">Add Expenses</button>
+  <button class="btn btn btn-info" data-toggle="modal" data-target="#myModal">Add Expenses</button>
 </div>
-
-<div class="expensesList" style="margin: 16px 24px;">
-    <div class="list-group row">
-       <div class="heading">
-        <label class="list-item col-sm-2 offset-1" style="max-width: 20%;">Category</label>
-        <label class="list-item col-sm-2">Item Name</label>
-        <label class="list-item col-sm-2">Amount</label>
-        <label class="list-item col-sm-2">Expense Date</label>
-       </div>
-       <div class="listContent">
-         <ul>
-           <li *ngFor="let detail of expensesArray; 
-             let i = index" 
-             style="list-style: none; margin-left: 3%;">
-            <span id="categoryEdit" (click)="deleteExpenseDetails(i);"> &#x2710; </span>
-            <label class="list-item col-sm-2" style="max-width: 20%;">{{detail.category}}</label>
-            <label class="list-item col-sm-2">{{detail.itemName}}</label>
-            <label class="list-item col-sm-2">{{detail.amount  }}  </label>
-            <label class="list-item col-sm-2">{{detail.date  }}   </label>
-          </li>
-         </ul>
-       </div>
-    </div>
-</div>
-
-   <!-- didnot use pagination in the current functionality -->
-<nav aria-label="..." style="margin-left : 20px;">
-    <ul class="pagination">
-      <li class="page-item disabled">
-        <span class="page-link">Previous</span>
-      </li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item active">
-        <span class="page-link">
-          2
-          <span class="sr-only">(current)</span>
-        </span>
-      </li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item"><a class="page-link" href="#">4</a></li>
-      <li class="page-item"><a class="page-link" href="#">5</a></li>
-      <li class="page-item">
-        <a class="page-link" href="#">Next</a>
-      </li>
-    </ul>
-  </nav>
 
 <!-- The Modal -->
 <div class="modal" id="myModal">
   <div class="modal-dialog">
     <div class="modal-content">
-    
+
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Modal Heading</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
-      
+
       <!-- Modal body -->
       <div class="modal-body" (focus)="focused();">
         <label for="itemName" class="label col-sm-3">Category</label>
@@ -105,22 +56,49 @@
             {{item}}
           </option>
         </select>
-        <br/>
+        <br />
         <label for="itemName" class="label col-sm-3">Item Name</label>
-        <input (focus)="focused();" type="text" class="label col-sm-5" #expenseName /><br/>
+        <input (focus)="focused();" type="text" class="label col-sm-5" #expenseName /><br />
         <label for="itemAmount" class="label col-sm-3">Amount</label>
-        <input (focus)="focused();" type="number" pattern= "[0-9]" class="label col-sm-5" #expenseAmount  /><br/>
-        <label for="itemAmount"  class="label col-sm-3" >Date</label>
+        <input (focus)="focused();" type="number" pattern="[0-9]" class="label col-sm-5" #expenseAmount /><br />
+        <label for="itemAmount" class="label col-sm-3">Date</label>
         <input type="date" (focus)="focused();" class="label col-sm-5" #expenseDate />
-          <div *ngIf="errors" style="color:red"><b><p>{{ errors }}  </p></b></div>
+        <div *ngIf="errors" style="color:red"><b>
+            <p>{{ errors }} </p>
+          </b></div>
       </div>
-      
+
       <!-- Modal footer -->
       <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="addExpenses(expenseCategory, expenseName,expenseAmount,expenseDate);">OK</button>
+        <button type="button" class="btn btn-primary"
+          (click)="addExpenses(expenseCategory, expenseName,expenseAmount,expenseDate);">OK</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
-      
+
     </div>
   </div>
+</div>
+<div style="text-align:center" *ngIf="expensesArray.length > 0">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Category</th>
+        <th scope="col">Item Name</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Expense Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of expensesArray | paginate: config; let i = index">
+
+        <td><span id="categoryEdit" (click)="deleteExpenseDetails(i);"> &#x2710; </span>{{item.category}}</td>
+        <td>{{item.itemName}}</td>
+        <td>{{item.amount}}</td>
+        <td>{{item.date}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+
 </div>

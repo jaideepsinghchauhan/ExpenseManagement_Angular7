@@ -18,8 +18,13 @@ export class HomeComponent implements OnInit {
   totalExpenses: number;
   percentSpent: number;
 
+  config: any;
+
   constructor(private expenseDetails: ExpenseDetailService) { }
 
+  pageChanged(event) {
+    this.config.currentPage = event;
+  }
   public pieChartData: number[] = [];
   public pieChartType: string = 'pie';
   public pieChartOptions: any = {};
@@ -34,6 +39,11 @@ export class HomeComponent implements OnInit {
       this.percentSpent = 0;
     }
     this.calculateData();
+    this.config = {
+      itemsPerPage: 3,
+      currentPage: 1,
+      totalItems: this.expensesArray.length
+    };
 
   }
 
@@ -87,9 +97,9 @@ export class HomeComponent implements OnInit {
 
     if (!this.errors) {
       $('#myModal').modal('hide');
-      amount.value="";
-      itemName.value="";
-      date.value="";
+      amount.value = "";
+      itemName.value = "";
+      date.value = "";
     }
 
   }
@@ -98,7 +108,7 @@ export class HomeComponent implements OnInit {
     this.errors = "";
   }
 
-  deleteExpenseDetails(index){
+  deleteExpenseDetails(index) {
     console.log(index);
     this.expenseDetails.deleteDetails(index);
   }
